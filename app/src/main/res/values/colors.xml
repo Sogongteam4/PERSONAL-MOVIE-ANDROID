@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+
+    <color name="answer_beige">#F5EEE6</color>
+    <color name="answer_pink">#EED3D9</color>
+
+    <color name="movie_year_green">#CCD3CA</color>
+    <color name="movie_background">#B9D7EA</color>
+    <color name="movie_start_yellow">#FFEC9E</color>
+    <color name="type_restart">#EED3D9</color>
+</resources>

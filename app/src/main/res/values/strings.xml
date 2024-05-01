@@ -1,0 +1,39 @@
+<resources>
+    <string name="app_name">PersonalMovie</string>
+
+    <string name="start_title">Personal\nMovie</string>
+    <string name="start_subtitle">> 화면을 터치하여 시작하기</string>
+
+    <string name="question_1">가장 좋아하는 영화 장면은?"</string>
+    <string name="answer_1_1">유머가 넘치는 장면</string>
+    <string name="answer_1_2">감동적인 장면</string>
+    <string name="answer_1_3">긴장감 넘치는 장면</string>
+    <string name="answer_1_4">액션과 추격 장면</string>
+
+    <string name="question_2">자신을 가장 비슷한 캐릭터는?</string>
+    <string name="answer_2_1">액션 히어로 캐릭터</string>
+    <string name="answer_2_2">로맨틱한 캐릭터</string>
+    <string name="answer_2_3">현실적인 캐릭터</string>
+    <string name="answer_2_4">모험을 꿈꾸는 캐릭터</string>
+
+    <string name="question_3">영화를 볼 때\n가장 중요하게 생각하는 것은?</string>
+    <string name="answer_3_1">웃음과 감동</string>
+    <string name="answer_3_2">스토리의 깊이와\n감정이입</string>
+    <string name="answer_3_3">긴장감과 스릴</string>
+    <string name="answer_3_4">지식이 되는 이야기</string>
+
+    <string name="question_4">체험하고 싶은 세계는?</string>
+    <string name="answer_4_1">사랑이 가득한 세계</string>
+    <string name="answer_4_2">범죄가 들끓는 세계</string>
+    <string name="answer_4_3">역사적인 과거 세계</string>
+    <string name="answer_4_4">미래 과학 기술의 세계</string>
+
+    <string name="loading_title">결과는...?</string>
+
+    <string name="score">%d점</string>
+    <string name="type_restart">다시하기</string>
+    <string name="type_more">더 많은 영화 검색</string>
+
+    <string name="racoon_title">솜사탕을 씻어먹는\n귀여운 너구리</string>
+    <string name="racoon_explanation">솜사탕을 씻어먹는 너구리처럼, 재빠르고 귀여운 취향을 지닌 당신은 웃음과 즐거움을 찾는 타입입니다.</string>
+</resources>
