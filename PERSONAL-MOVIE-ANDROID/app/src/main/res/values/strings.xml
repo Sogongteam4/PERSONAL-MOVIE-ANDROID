@@ -1,0 +1,60 @@
+<resources>
+    <string name="app_name">PersonalMovie</string>
+
+    <string name="start_title">Personal\nMovie</string>
+    <string name="start_subtitle">> 화면을 터치하여 시작하기</string>
+
+    <string name="question_1">가장 좋아하는 영화 장면은?"</string>
+    <string name="answer_1_1">유머가 넘치는 장면</string>
+    <string name="answer_1_2">감동적인 장면</string>
+    <string name="answer_1_3">긴장감 넘치는 장면</string>
+    <string name="answer_1_4">액션과 추격 장면</string>
+
+    <string name="question_2">자신을 가장 비슷한 캐릭터는?</string>
+    <string name="answer_2_1">액션 히어로 캐릭터</string>
+    <string name="answer_2_2">로맨틱한 캐릭터</string>
+    <string name="answer_2_3">현실적인 캐릭터</string>
+    <string name="answer_2_4">모험을 꿈꾸는 캐릭터</string>
+
+    <string name="question_3">영화를 볼 때\n가장 중요하게 생각하는 것은?</string>
+    <string name="answer_3_1">웃음과 감동</string>
+    <string name="answer_3_2">스토리의 깊이와\n감정이입</string>
+    <string name="answer_3_3">긴장감과 스릴</string>
+    <string name="answer_3_4">지식이 되는 이야기</string>
+
+    <string name="question_4">체험하고 싶은 세계는?</string>
+    <string name="answer_4_1">사랑이 가득한 세계</string>
+    <string name="answer_4_2">범죄가 들끓는 세계</string>
+    <string name="answer_4_3">역사적인 과거 세계</string>
+    <string name="answer_4_4">미래 과학 기술의 세계</string>
+
+    <string name="loading_title">결과는...?</string>
+
+    <string name="score">%d점</string>
+    <string name="type_restart">다시하기</string>
+    <string name="type_more">더 많은 영화 검색</string>
+
+    <string name="racoon_title">솜사탕을 씻어먹는\n귀여운 너구리</string>
+    <string name="racoon_explanation">솜사탕을 씻어먹는 너구리처럼, 재빠르고 귀여운 취향을 지닌 당신은 웃음과 즐거움을 찾는 타입입니다.</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string name="deer_title">깊은 숲 속을\n천천히 거니는 사슴</string>
+    <string name="deer_explanation">깊은 숲 속을 거니는 사슴처럼, 여유롭고 심오한 이야기의 흐름을 따라가며 영화의 깊이를 즐기는 타입입니다.</string>
+
+    <string name="owl_title">어둠 속을 은밀하게\n이동하는 올빼미</string>
+    <string name="owl_explanation">어둠 속을 은밀하게 이동하는 올빼미처럼, 신비롭고 미지의 세계를 탐험하는 것을 즐기며 긴장과 스릴을 사랑하는 타입입니다.</string>
+
+    <string name="cheetah_title">사바나를 누비며 달리는\n달리는 치타</string>
+    <string name="cheetah_explanation">사바나를 누비며 달리는 치타처럼, 빠르고 강렬한 액션의 세계에 열정을 느끼며 짜릿한 속도감을 즐기는 타입입니다.</string>
+
+    <string name="butterfly_title">봄날의 꽃밭에서\n나른한 오루를\n즐기는 나비</string>
+    <string name="butterfly_explanation">봄날의 꽃밭에서 나른한 오후를 즐기는 나비처럼, 사랑과 감성에 빠져드는 것을 즐기며 따뜻함을 느끼는 타입입니다.</string>
+
+    <string name="monkey_title">호기심 가득한 원숭이</string>
+    <string name="monkey_explanation">호기심 가득한 원숭이처럼, 세상에 대한 지식과 이해를 넓히려는 욕구가 강하며 새로운 사실들을 배우고자 하는 타입입니다.</string>
+
+    <string name="dragon_title">광활한 우주를\n탐험하는 용</string>
+    <string name="dragon_explanation">광활한 우주를 탐험하는 용처럼, 상상력의 한계를 넘어서는 이야기에 매력을 느끼는, 무한한 가능성을 꿈꾸는 타입입니다.</string>
+
+</resources>
