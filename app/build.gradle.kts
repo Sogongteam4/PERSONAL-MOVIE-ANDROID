@@ -1,3 +1,5 @@
+import com.android.build.gradle.internal.cxx.configure.gradleLocalProperties
+
 plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.jetbrainsKotlinAndroid)
@@ -19,6 +21,20 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+
+        buildConfigField(
+            "String",
+            "BASE_URL",
+            gradleLocalProperties(rootDir, providers).getProperty("base.url")
+        )
+
+        buildConfigField(
+            "String",
+            "NATIVE_APP_KEY",
+            gradleLocalProperties(rootDir, providers).getProperty("kakao.native.app.key")
+        )
+
+        resValue("string","kakao_oauth_host",gradleLocalProperties(rootDir, providers).getProperty("kakao.oauth.host"))
     }
 
     buildTypes {
@@ -78,18 +94,21 @@ dependencies {
 
     //hilt
     implementation("com.google.dagger:hilt-android:2.46.1")
-    kapt ("com.google.dagger:hilt-android-compiler:2.46.1")
-    kapt ("com.google.dagger:dagger-android-processor:2.46.1")
+    kapt("com.google.dagger:hilt-android-compiler:2.46.1")
+    kapt("com.google.dagger:dagger-android-processor:2.46.1")
 
     // timber
-    implementation ("com.jakewharton.timber:timber:4.7.1")
+    implementation("com.jakewharton.timber:timber:4.7.1")
 
     //viewpager2
-    implementation ("androidx.viewpager2:viewpager2:1.0.0")
+    implementation("androidx.viewpager2:viewpager2:1.0.0")
 
     //glide
-    implementation ("com.github.bumptech.glide:glide:4.11.0")
-    annotationProcessor ("com.github.bumptech.glide:compiler:4.11.0")
+    implementation("com.github.bumptech.glide:glide:4.11.0")
+    annotationProcessor("com.github.bumptech.glide:compiler:4.11.0")
+
+    //kakao
+    implementation("com.kakao.sdk:v2-user:2.20.1")
 }
 
 kapt {

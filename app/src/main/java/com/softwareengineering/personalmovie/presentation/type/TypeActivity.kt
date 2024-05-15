@@ -1,5 +1,6 @@
 package com.softwareengineering.personalmovie.presentation.type
 
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
@@ -30,8 +31,8 @@ class TypeActivity:AppCompatActivity() {
             .commit()
     }
 
-    fun restartQuestionActivity(){
-        var intent = Intent(this, QuestionActivity::class.java)
+    fun replaceActivity(activity: AppCompatActivity){
+        var intent = Intent(this, activity::class.java)
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
         startActivity(intent)
         finish()

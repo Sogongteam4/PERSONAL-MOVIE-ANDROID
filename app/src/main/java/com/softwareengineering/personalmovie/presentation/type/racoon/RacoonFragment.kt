@@ -102,6 +102,10 @@ class RacoonFragment: Fragment() {
         binding.btnRestart.setOnClickListener {
             activity.restartQuestionActivity()
         }
+
+        binding.btnMore.setOnClickListener{
+
+        }
     }
 
     override fun onDestroyView() {
