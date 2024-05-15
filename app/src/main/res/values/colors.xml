@@ -10,4 +10,8 @@
     <color name="movie_background">#B9D7EA</color>
     <color name="movie_start_yellow">#FFEC9E</color>
     <color name="type_restart">#EED3D9</color>
+
+    <color name="search_genre_background_orange">#FFDDCC</color>
+    <color name="search_year_background_green">#CCD3CA</color>
+    <color name="search_type_background_purple">#DFCCFB</color>
 </resources>
