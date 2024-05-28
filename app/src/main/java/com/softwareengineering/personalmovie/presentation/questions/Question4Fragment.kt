@@ -3,6 +3,7 @@ package com.softwareengineering.personalmovie.presentation.questions
 import android.annotation.SuppressLint
 import android.os.Bundle
 import android.os.Handler
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,12 +12,14 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.softwareengineering.personalmovie.R
 import com.softwareengineering.personalmovie.databinding.FragmentQuestion4Binding
+import com.softwareengineering.personalmovie.presentation.AllViewModel
 
 class Question4Fragment:Fragment() {
     private var _binding: FragmentQuestion4Binding?=null
     private val binding: FragmentQuestion4Binding
         get() = requireNotNull(_binding){"바인딩 객체 생성 안됨"}
 
+    private lateinit var questionViewModel: QuestionViewModel
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -28,7 +31,13 @@ class Question4Fragment:Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        setViewModel()
         clickButtons()
+    }
+
+    private fun setViewModel(){
+        val activity=requireActivity() as QuestionActivity
+        questionViewModel= ViewModelProvider(activity)[QuestionViewModel::class.java]
     }
 
     private fun clickButtons(){
@@ -49,17 +58,20 @@ class Question4Fragment:Fragment() {
     }
 
     private fun clickListener(item:Int, btn: Button){
-        val activity=requireActivity() as QuestionActivity
-        val viewModel= ViewModelProvider(activity).get(QuestionViewModel::class.java)
-
-        viewModel.clearAnswerList()
-        viewModel.addToAnswerList(item)
+        questionViewModel.haveAnswer(4)
+        questionViewModel.addToAnswerMap(4, item)
         startAnimation(btn)
     }
 
     @SuppressLint("UseCompatLoadingForDrawables")
     private fun startAnimation(btn: Button){
         val activity=requireActivity() as QuestionActivity
+
+        /*questionViewModel.answerMap.observe(viewLifecycleOwner){map ->
+            run {
+                Log.d("question4fragment", "map")
+            }
+        }*/
 
         val clickedDrawable = resources.getDrawable(R.drawable.btn_clicked)
         val unclickedDrawable = resources.getDrawable(R.drawable.btn_unclicked)

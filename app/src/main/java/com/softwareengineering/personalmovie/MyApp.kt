@@ -2,6 +2,7 @@ package com.softwareengineering.personalmovie
 
 import android.app.Application
 import com.kakao.sdk.common.KakaoSdk
+import com.softwareengineering.personalmovie.di.PreferenceUtil
 import dagger.hilt.android.HiltAndroidApp
 
 @HiltAndroidApp

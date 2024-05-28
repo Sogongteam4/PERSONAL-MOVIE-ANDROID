@@ -49,10 +49,10 @@ class Question2Fragment:Fragment() {
 
     private fun clickListener(item:Int, btn: Button){
         val activity=requireActivity() as QuestionActivity
-        val viewModel= ViewModelProvider(activity).get(QuestionViewModel::class.java)
+        val viewModel= ViewModelProvider(activity)[QuestionViewModel::class.java]
 
-        viewModel.clearAnswerList()
-        viewModel.addToAnswerList(item)
+        //viewModel.haveAnswer(2)
+        viewModel.addToAnswerMap(2, item)
         startAnimation(btn)
         activity.switchFragment(Question3Fragment())
     }
