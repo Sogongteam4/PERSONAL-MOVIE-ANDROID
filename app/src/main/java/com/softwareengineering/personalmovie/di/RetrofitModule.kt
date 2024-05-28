@@ -1,5 +1,6 @@
 package com.softwareengineering.personalmovie.di
 
+import android.util.Log
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import com.softwareengineering.personalmovie.BuildConfig
 import dagger.Module
@@ -7,13 +8,16 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import kotlinx.serialization.json.Json
+import okhttp3.Interceptor
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import org.json.JSONObject
 import retrofit2.Converter
+import retrofit2.Response
 import retrofit2.Retrofit
 import timber.log.Timber
+import java.io.IOException
 import java.util.concurrent.TimeUnit
 import javax.inject.Singleton
 
@@ -25,9 +29,10 @@ object RetrofitModule {
     fun provideOkHttpClient(
         interceptor: HttpLoggingInterceptor,
     ): OkHttpClient {
-        return OkHttpClient.Builder().addInterceptor(interceptor)
-            .connectTimeout(100, TimeUnit.SECONDS).readTimeout(100, TimeUnit.SECONDS)
-            .writeTimeout(100, TimeUnit.SECONDS).build()
+        return OkHttpClient.Builder()
+            .addInterceptor(interceptor)
+            .connectTimeout(300, TimeUnit.SECONDS).readTimeout(200, TimeUnit.SECONDS)
+            .writeTimeout(200, TimeUnit.SECONDS).build()
     }
 
     @Provides
@@ -56,8 +61,11 @@ object RetrofitModule {
         jsonConverter: Converter.Factory,
         client: OkHttpClient,
     ): Retrofit {
-        return Retrofit.Builder().baseUrl(BuildConfig.BASE_URL)
-            .addConverterFactory(jsonConverter).client(client).build()
+        return Retrofit.Builder()
+            .baseUrl(BuildConfig.BASE_URL)
+            .addConverterFactory(jsonConverter)
+            .client(client)
+            .build()
     }
 
     @Provides

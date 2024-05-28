@@ -109,6 +109,10 @@ dependencies {
 
     //kakao
     implementation("com.kakao.sdk:v2-user:2.20.1")
+
+    //exoplayer
+    implementation ("com.google.android.exoplayer:exoplayer:2.19.1")
+    implementation ("com.pierfrancescosoffritti.androidyoutubeplayer:core:11.1.0")
 }
 
 kapt {

@@ -1,4 +1,4 @@
-package com.softwareengineering.personalmovie.presentation.type.racoon
+package com.softwareengineering.personalmovie.presentation.type
 
 import android.os.Bundle
 import android.util.Log
@@ -7,15 +7,21 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.widget.ViewPager2
+import coil.load
 import com.softwareengineering.personalmovie.R
 import com.softwareengineering.personalmovie.data.Movie
-import com.softwareengineering.personalmovie.databinding.FragmentRacoonBinding
-import com.softwareengineering.personalmovie.presentation.type.TypeActivity
+import com.softwareengineering.personalmovie.data.responseDto.ResponseMovieDto
+import com.softwareengineering.personalmovie.data.responseDto.ResponseTypeDto
+import com.softwareengineering.personalmovie.databinding.FragmentTypeBinding
+import com.softwareengineering.personalmovie.presentation.more.MoreActivity
 import kotlin.math.abs
 
-class RacoonFragment: Fragment() {
-    private var _binding: FragmentRacoonBinding?=null
-    private val binding: FragmentRacoonBinding
+class TypeFragment(
+    private val typeData:ResponseTypeDto.Data,
+    private val typeViewModel: TypeViewModel
+): Fragment() {
+    private var _binding: FragmentTypeBinding?=null
+    private val binding: FragmentTypeBinding
         get() = requireNotNull(_binding){"바인딩 객체 생성 안됨"}
 
     override fun onCreateView(
@@ -23,37 +29,27 @@ class RacoonFragment: Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentRacoonBinding.inflate(inflater,container,false)
+        _binding = FragmentTypeBinding.inflate(inflater,container,false)
         return binding.root
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        bindAdapter()
+
     }
 
-
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        clickButton()
-    }
-
-    private fun bindAdapter(){
-        with(binding){
-            vpMovie.adapter= context?.let { RacoonViewPagerAdapter(it, makeMockList()) }
-            // 관리하는 페이지 수. default = 1
+    private fun bindAdapter(movieList: List<ResponseMovieDto.Data>) {
+        with(binding) {
+            vpMovie.adapter = context?.let { TypeViewPagerAdapter(lifecycle, it, movieList) }
             vpMovie.offscreenPageLimit = 4
-            vpMovie.orientation=ViewPager2.ORIENTATION_HORIZONTAL
+            vpMovie.orientation = ViewPager2.ORIENTATION_HORIZONTAL
 
-            // item_view 간의 양 옆 여백을 상쇄할 값
             val offsetBetweenPages = resources.getDimensionPixelOffset(R.dimen.offsetBetweenPages).toFloat()
             vpMovie.setPageTransformer { page, position ->
                 val myOffset = position * -(2 * offsetBetweenPages)
                 if (position < -1) {
                     page.translationX = -myOffset
                 } else if (position <= 1) {
-                    // Paging 시 Y축 Animation 배경색을 약간 연하게 처리
                     val scaleFactor = 0.8f.coerceAtLeast(1 - abs(position))
                     page.translationX = myOffset
                     page.scaleY = scaleFactor
@@ -64,16 +60,40 @@ class RacoonFragment: Fragment() {
                 }
             }
 
-            vpMovie.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback(){
-
-                // Paging 완료되면 호출
+            vpMovie.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
                 override fun onPageSelected(position: Int) {
                     super.onPageSelected(position)
-                    Log.d("ViewPagerFragment", "Page ${position+1}")
+                    Log.d("ViewPagerFragment", "Page ${position + 1}")
                 }
             })
         }
+    }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        observeViewModel()
+        setting()
+        setTexts()
+        //bindAdapter()
+        clickButton()
+    }
+    private fun observeViewModel() {
+        typeViewModel.movieList.observe(viewLifecycleOwner) { movieList ->
+            Log.d("RacoonFragment", "Movie list updated: $movieList")
+            bindAdapter(movieList)
+        }
+    }
+    private fun setting(){
+        for(movieId in typeData.movieIds){
+            typeViewModel.getMovie(movieId)
+        }
+    }
+
+    private fun setTexts(){
+        with(binding){
+            tvTitle.text=typeData.type
+            ivRacoon.load(typeData.imgUri)
+        }
     }
 
 
@@ -104,7 +124,7 @@ class RacoonFragment: Fragment() {
         }
 
         binding.btnMore.setOnClickListener{
-
+            activity.replaceActivity(MoreActivity())
         }
     }
 

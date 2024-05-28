@@ -4,4 +4,7 @@
     <dimen name="offsetBetweenPages">40dp</dimen>
     <!--  각 페이지의 양 옆 margin  -->
     <dimen name="pageMargin">30dp</dimen>
+
+    <dimen name="dialog_width">400dp</dimen>
+    <dimen name="dialog_height">250dp</dimen>
 </resources>
