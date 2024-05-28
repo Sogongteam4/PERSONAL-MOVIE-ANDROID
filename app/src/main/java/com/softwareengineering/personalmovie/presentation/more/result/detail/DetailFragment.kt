@@ -5,14 +5,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.findViewTreeLifecycleOwner
 import com.google.android.exoplayer2.ExoPlayer
 import com.google.android.exoplayer2.MediaItem
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView
 import com.softwareengineering.personalmovie.R
-import com.softwareengineering.personalmovie.data.Movie
 import com.softwareengineering.personalmovie.data.responseDto.ResponseMovieDto
 import com.softwareengineering.personalmovie.databinding.FragmentDetailBinding
 import com.softwareengineering.personalmovie.databinding.ItemDetailBinding

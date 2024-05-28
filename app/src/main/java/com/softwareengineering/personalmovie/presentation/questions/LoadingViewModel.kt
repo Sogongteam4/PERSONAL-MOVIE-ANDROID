@@ -3,7 +3,6 @@ package com.softwareengineering.personalmovie.presentation.questions
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.softwareengineering.personalmovie.data.repositoryImpl.AuthRepositoryImpl
 import com.softwareengineering.personalmovie.domain.repository.AuthRepository
 import com.softwareengineering.personalmovie.extension.TypeState
 import dagger.hilt.android.lifecycle.HiltViewModel
