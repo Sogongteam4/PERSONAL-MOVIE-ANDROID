@@ -1,11 +1,9 @@
 package com.softwareengineering.personalmovie.presentation.more
 
-import android.content.ClipData.Item
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.softwareengineering.personalmovie.databinding.ItemTypeBinding
-import com.softwareengineering.personalmovie.databinding.ItemYearBinding
 
 class TypeAdapter : RecyclerView.Adapter<TypeViewHolder>() {
     private var typeList: MutableList<String> = mutableListOf()

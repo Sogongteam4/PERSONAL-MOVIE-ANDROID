@@ -1,6 +1,5 @@
 package com.softwareengineering.personalmovie.presentation.questions
 
-import android.graphics.drawable.AnimationDrawable
 import android.os.Bundle
 import android.os.Handler
 import android.view.LayoutInflater
@@ -11,7 +10,6 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.softwareengineering.personalmovie.R
 import com.softwareengineering.personalmovie.databinding.FragmentQuestion1Binding
-import com.softwareengineering.personalmovie.extension.SurveyState
 
 class Question1Fragment : Fragment(){
     private var _binding: FragmentQuestion1Binding?=null
