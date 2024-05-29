@@ -6,7 +6,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_marginLeft="@dimen/pageMargin"
-    android:layout_marginRight="@dimen/pageMargin">
+    android:layout_marginRight="@dimen/pageMargin"
+    android:background="@color/white">
 
     <TextView
         android:id="@+id/tv_year"
@@ -22,7 +23,7 @@
 
     <com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView
         android:id="@+id/pv_video"
-        android:layout_width="250dp"
+        android:layout_width="300dp"
         android:layout_height="200dp"
         android:layout_marginTop="30dp"
         app:layout_constraintTop_toBottomOf="@id/tv_year"

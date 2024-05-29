@@ -13,12 +13,12 @@ import com.softwareengineering.personalmovie.R
 import com.softwareengineering.personalmovie.data.responseDto.ResponseMovieDto
 import com.softwareengineering.personalmovie.databinding.ItemDetailBinding
 
-class TypeViewPagerAdapter(private val lifecycle: Lifecycle, private val context:Context, private val movieList:List<ResponseMovieDto.Data>):
+class TypeViewPagerAdapter(private val context:Context, private val movieList:List<ResponseMovieDto.Data>):
     RecyclerView.Adapter<TypeViewPagerAdapter.RacoonPagerViewHolder>() {
     inner class RacoonPagerViewHolder(private val binding: ItemDetailBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(movie:ResponseMovieDto.Data, lifecycle: Lifecycle) {
+        fun bind(movie:ResponseMovieDto.Data) {
             val scoreText = movie.rate
             with(binding){
                 tvYear.text=movie.releaseYear.toString()
@@ -35,7 +35,7 @@ class TypeViewPagerAdapter(private val lifecycle: Lifecycle, private val context
             youTubePlayerView.addYouTubePlayerListener(object : AbstractYouTubePlayerListener() {
                 override fun onReady(youTubePlayer: YouTubePlayer){
                     val videoId = movie.trailerUri.substringAfter("?v=")
-                    youTubePlayer.loadVideo(videoId,0f)
+                    youTubePlayer.cueVideo(videoId,0f)
                 }
             })
         }
@@ -48,7 +48,7 @@ class TypeViewPagerAdapter(private val lifecycle: Lifecycle, private val context
     }
     override fun onBindViewHolder(holder: RacoonPagerViewHolder, position: Int) {
         val movie = movieList[position]
-        holder.bind(movie, lifecycle)
+        holder.bind(movie)
     }
 
     override fun getItemCount(): Int =movieList.size

@@ -55,13 +55,9 @@ class StartActivity:AppCompatActivity() {
             kakaoAuthViewModel.isLoggedIn.collect{
                 when(it){
                     true -> {
-                        //binding.tvLogin.text="카카오계정으로 로그인 성공"
                         collectAccessState()
-                        /*var intent = Intent(this@StartActivity, QuestionActivity::class.java)
-                        startActivity(intent)
-                        finish()*/
                     }
-                    false -> Log.d("startactivity","login failed")//binding.tvLogin.text="카카오계정으로 로그인 실패"
+                    false -> Log.d("startactivity","login failed")
                 }
             }
         }

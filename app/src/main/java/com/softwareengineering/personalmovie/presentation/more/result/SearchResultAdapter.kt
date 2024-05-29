@@ -4,11 +4,13 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.softwareengineering.personalmovie.data.Movie
+import com.softwareengineering.personalmovie.data.responseDto.ResponseMovieDto
 import com.softwareengineering.personalmovie.databinding.ItemResultBinding
 import com.softwareengineering.personalmovie.presentation.more.GenreViewHolder
 
-class SearchResultAdapter:RecyclerView.Adapter<SearchResultViewHolder>() {
-    private var resultList:MutableList<Movie> = mutableListOf()
+class SearchResultAdapter(
+    private val resultList:List<ResponseMovieDto.Data>
+) :RecyclerView.Adapter<SearchResultViewHolder>() {
     private lateinit var listener:SearchResultViewHolder.OnItemClickListener
 
     fun setOnItemClickListener(listener: SearchResultViewHolder.OnItemClickListener){
@@ -27,7 +29,4 @@ class SearchResultAdapter:RecyclerView.Adapter<SearchResultViewHolder>() {
 
     override fun getItemCount() = resultList.size
 
-    fun makeResultList(){
-        resultList = MockDataListProvider.getMockDataList().toMutableList()
-    }
 }

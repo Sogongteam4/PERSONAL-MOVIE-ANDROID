@@ -69,8 +69,11 @@ class MoreActivity:AppCompatActivity() {
     }
 
     private fun deliverData(data: String) {
+        val token:String= intent.getStringExtra("token").toString()
+        Log.d("moreactivity","token: $token")
         val intent = Intent(this, SearchResultActivity::class.java).apply {
             putExtra("result", data)
+            putExtra("token",token)
         }
         Log.d("moreActivity", "clickedButton:$data")
         startActivity(intent)
