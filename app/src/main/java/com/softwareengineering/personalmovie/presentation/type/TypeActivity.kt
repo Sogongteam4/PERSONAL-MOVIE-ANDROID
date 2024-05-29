@@ -44,13 +44,15 @@ class TypeActivity:AppCompatActivity() {
     fun restartQuestionActivity(){
         var intent = Intent(this, QuestionActivity::class.java)
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
+        intent.putExtra("token",typeViewModel.getToken())
         startActivity(intent)
         finish()
     }
 
     fun replaceActivity(activity: AppCompatActivity){
         var intent = Intent(this, activity::class.java)
-        //intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
+        intent.putExtra("token",typeViewModel.getToken())
         startActivity(intent)
         finish()
     }

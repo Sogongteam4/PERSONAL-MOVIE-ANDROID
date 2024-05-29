@@ -70,4 +70,6 @@ class TypeViewModel @Inject constructor(
     fun setToken(token:String) {
         this.token=token
     }
+
+    fun getToken():String = token!!
 }

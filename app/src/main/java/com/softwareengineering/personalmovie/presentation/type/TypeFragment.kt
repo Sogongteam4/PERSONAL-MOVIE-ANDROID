@@ -6,6 +6,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.RecyclerView
+import androidx.viewpager2.widget.CompositePageTransformer
+import androidx.viewpager2.widget.MarginPageTransformer
 import androidx.viewpager2.widget.ViewPager2
 import coil.load
 import com.softwareengineering.personalmovie.R
@@ -38,27 +41,53 @@ class TypeFragment(
 
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        observeViewModel()
+        setting()
+        setTexts()
+        clickButton()
+    }
+    private fun observeViewModel() {
+        typeViewModel.movieList.observe(viewLifecycleOwner) { movieList ->
+            Log.d("RacoonFragment", "Movie list updated: $movieList")
+            bindAdapter(movieList)
+        }
+    }
+
     private fun bindAdapter(movieList: List<ResponseMovieDto.Data>) {
         with(binding) {
-            vpMovie.adapter = context?.let { TypeViewPagerAdapter(lifecycle, it, movieList) }
+            vpMovie.adapter = context?.let { TypeViewPagerAdapter(it, movieList) }
             vpMovie.offscreenPageLimit = 4
             vpMovie.orientation = ViewPager2.ORIENTATION_HORIZONTAL
 
-            val offsetBetweenPages = resources.getDimensionPixelOffset(R.dimen.offsetBetweenPages).toFloat()
-            vpMovie.setPageTransformer { page, position ->
-                val myOffset = position * -(2 * offsetBetweenPages)
-                if (position < -1) {
-                    page.translationX = -myOffset
-                } else if (position <= 1) {
-                    val scaleFactor = 0.8f.coerceAtLeast(1 - abs(position))
-                    page.translationX = myOffset
-                    page.scaleY = scaleFactor
-                    page.alpha = scaleFactor
-                } else {
-                    page.alpha = 0f
-                    page.translationX = myOffset
-                }
+            // RecyclerView 설정
+            val recyclerView = vpMovie.getChildAt(0) as RecyclerView
+            recyclerView.clipToPadding = false
+            recyclerView.clipChildren = false
+            recyclerView.overScrollMode = RecyclerView.OVER_SCROLL_NEVER
+
+            // ViewPager2에 패딩 추가
+            val pageMarginPx = resources.getDimensionPixelOffset(R.dimen.pageMargin)
+            val offsetPx = resources.getDimensionPixelOffset(R.dimen.offsetBetweenPages)
+            vpMovie.setPadding(offsetPx, 0, offsetPx, 0)
+            vpMovie.setClipToPadding(false)
+            vpMovie.setClipChildren(false)
+
+            val compositePageTransformer = CompositePageTransformer()
+            compositePageTransformer.addTransformer(MarginPageTransformer(pageMarginPx))
+            compositePageTransformer.addTransformer { page, position ->
+                val scaleFactor = 0.85f.coerceAtLeast(1 - abs(position))
+                page.scaleY = scaleFactor
+                page.alpha = scaleFactor
+                val myOffset = position * -(2 * offsetPx)
+                page.translationX = myOffset
+
+                // Z 순서 설정
+                page.translationZ = if (position == 0f) 1f else 0f
             }
+
+            vpMovie.setPageTransformer(compositePageTransformer)
 
             vpMovie.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
                 override fun onPageSelected(position: Int) {
@@ -69,20 +98,6 @@ class TypeFragment(
         }
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        observeViewModel()
-        setting()
-        setTexts()
-        //bindAdapter()
-        clickButton()
-    }
-    private fun observeViewModel() {
-        typeViewModel.movieList.observe(viewLifecycleOwner) { movieList ->
-            Log.d("RacoonFragment", "Movie list updated: $movieList")
-            bindAdapter(movieList)
-        }
-    }
     private fun setting(){
         for(movieId in typeData.movieIds){
             typeViewModel.getMovie(movieId)
@@ -94,27 +109,6 @@ class TypeFragment(
             tvTitle.text=typeData.type
             ivRacoon.load(typeData.imgUri)
         }
-    }
-
-
-    private fun makeMockList():List<Movie>{
-        val movieList= listOf(
-            Movie(1995, R.drawable.toystory, "Toy Story", listOf(
-                Movie.Genre("Adventure"),
-                Movie.Genre("Animation"),
-                Movie.Genre("Comedy"),
-                Movie.Genre("Children")
-            ), 4),
-            Movie(1996,R.drawable.jumanji,"Jumanji", listOf(
-                Movie.Genre("Adventure"),
-                Movie.Genre("Children"),
-                Movie.Genre("Fantsy"),
-            ), 3),
-            Movie(1996, R.drawable.blacksheep, "Black Sheep", listOf(
-                Movie.Genre("Comedy")
-            ), 3)
-        )
-        return movieList
     }
 
     private fun clickButton(){
