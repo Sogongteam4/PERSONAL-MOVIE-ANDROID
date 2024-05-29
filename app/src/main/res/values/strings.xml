@@ -4,6 +4,8 @@
     <string name="start_title">Personal\nMovie</string>
     <string name="start_subtitle">> 화면을 터치하여 시작하기</string>
 
+    <string name="login_loading">질문을 만드는 중</string>
+
     <string name="question_1">가장 좋아하는 영화 장면은?"</string>
     <string name="answer_1_1">유머가 넘치는 장면</string>
     <string name="answer_1_2">감동적인 장면</string>
@@ -30,10 +32,19 @@
 
     <string name="loading_title">결과는...?</string>
 
-    <string name="score">%d점</string>
+    <string name="score">%.1f점</string>
     <string name="type_restart">다시하기</string>
     <string name="type_more">더 많은 영화 검색</string>
 
     <string name="racoon_title">솜사탕을 씻어먹는\n귀여운 너구리</string>
     <string name="racoon_explanation">솜사탕을 씻어먹는 너구리처럼, 재빠르고 귀여운 취향을 지닌 당신은 웃음과 즐거움을 찾는 타입입니다.</string>
+
+
+    <string name="more_genre">장르</string>
+    <string name="more_year">연도</string>
+    <string name="more_type">유형</string>
+    <string name="more_btn_adventure">어드벤처</string>
+    <string name="more_btn_animation">애니메이션</string>
+
+    <string name="search_result_btn_back">&lt;</string>
 </resources>

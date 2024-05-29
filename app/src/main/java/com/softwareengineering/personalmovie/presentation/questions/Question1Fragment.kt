@@ -1,6 +1,5 @@
 package com.softwareengineering.personalmovie.presentation.questions
 
-import android.graphics.drawable.AnimationDrawable
 import android.os.Bundle
 import android.os.Handler
 import android.view.LayoutInflater
@@ -50,10 +49,10 @@ class Question1Fragment : Fragment(){
 
     private fun clickListener(item:Int, btn:Button){
         val activity=requireActivity() as QuestionActivity
-        val viewModel=ViewModelProvider(activity).get(QuestionViewModel::class.java)
+        val viewModel= ViewModelProvider(activity)[QuestionViewModel::class.java]
 
-        viewModel.clearAnswerList()
-        viewModel.addToAnswerList(item)
+        viewModel.clearAnswerMap()
+        viewModel.addToAnswerMap(1, item)
         startAnimation(btn)
         activity.switchFragment(Question2Fragment())
     }
