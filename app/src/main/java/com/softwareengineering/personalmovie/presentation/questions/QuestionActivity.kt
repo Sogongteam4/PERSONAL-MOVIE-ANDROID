@@ -20,7 +20,7 @@ class QuestionActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         initBinds()
-        setFragment(Question1Fragment())
+        setFragment(QuestionFragment())
     }
 
     private fun initBinds() {

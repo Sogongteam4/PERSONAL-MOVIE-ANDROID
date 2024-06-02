@@ -11,14 +11,14 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import com.softwareengineering.personalmovie.R
-import com.softwareengineering.personalmovie.databinding.FragmentQuestion1Binding
+import com.softwareengineering.personalmovie.databinding.FragmentQuestionBinding
 import com.softwareengineering.personalmovie.extension.SurveyState
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
-class Question1Fragment : Fragment() {
-    private var _binding: FragmentQuestion1Binding? = null
-    private val binding: FragmentQuestion1Binding
+class QuestionFragment : Fragment() {
+    private var _binding: FragmentQuestionBinding? = null
+    private val binding: FragmentQuestionBinding
         get() = requireNotNull(_binding) { "바인딩 객체 생성 안됨" }
     private lateinit var questionViewModel: QuestionViewModel
     private lateinit var questionAdpater: QuestionAdapter
@@ -28,7 +28,7 @@ class Question1Fragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        _binding = FragmentQuestion1Binding.inflate(inflater, container, false)
+        _binding = FragmentQuestionBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -108,16 +108,6 @@ class Question1Fragment : Fragment() {
     private fun getNextSurvey(btn: Button) {
         btn.background = resources.getDrawable(R.drawable.btn_unclicked)
         questionViewModel.getSurvey()
-    }
-
-    private fun clickListener(item: Int, btn: Button) {
-        val activity = requireActivity() as QuestionActivity
-        val viewModel = ViewModelProvider(activity)[QuestionViewModel::class.java]
-
-        viewModel.clearAnswerMap()
-        //viewModel.addToAnswerMap(1, item)
-        startAnimation(btn)
-        activity.switchFragment(Question2Fragment())
     }
 
     private fun startAnimation(btn: Button) {
