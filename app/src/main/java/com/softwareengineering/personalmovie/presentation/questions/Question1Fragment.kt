@@ -2,66 +2,130 @@ package com.softwareengineering.personalmovie.presentation.questions
 
 import android.os.Bundle
 import android.os.Handler
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import com.softwareengineering.personalmovie.R
 import com.softwareengineering.personalmovie.databinding.FragmentQuestion1Binding
+import com.softwareengineering.personalmovie.extension.SurveyState
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
-class Question1Fragment : Fragment(){
-    private var _binding: FragmentQuestion1Binding?=null
+class Question1Fragment : Fragment() {
+    private var _binding: FragmentQuestion1Binding? = null
     private val binding: FragmentQuestion1Binding
-        get() = requireNotNull(_binding){"바인딩 객체 생성 안됨"}
+        get() = requireNotNull(_binding) { "바인딩 객체 생성 안됨" }
+    private lateinit var questionViewModel: QuestionViewModel
+    private lateinit var questionAdpater: QuestionAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        _binding = FragmentQuestion1Binding.inflate(inflater,container,false)
+        _binding = FragmentQuestion1Binding.inflate(inflater, container, false)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        setting()
+        getData()
         clickButtons()
     }
 
-    private fun clickButtons(){
-        with(binding){
-            btn1.setOnClickListener {
-                clickListener(1, btn1)
-            }
-            btn2.setOnClickListener {
-                clickListener(2, btn2)
-            }
-            btn3.setOnClickListener {
-                clickListener(3, btn3)
-            }
-            btn4.setOnClickListener {
-               clickListener(4, btn4)
+    private fun setting() {
+        questionViewModel = ViewModelProvider(requireActivity()).get(QuestionViewModel::class.java)
+        questionAdpater = QuestionAdapter()
+        binding.rvBtn.adapter = questionAdpater
+    }
+
+    private fun getData() {
+        questionViewModel.getSurvey()
+        lifecycleScope.launch {
+            questionViewModel.surveyState.collect { surveyState ->
+                when (surveyState) {
+                    is SurveyState.Success -> {
+                        Log.d("questionfragment", "survey success")
+                        binding.tvQuestion.text = surveyState.survey.question
+                        questionAdpater.updateBtnList(surveyState.survey.choices)
+                    }
+
+                    is SurveyState.Loading -> {}
+                    is SurveyState.Error -> {
+                        Log.e("questionfragment", "surveystate error!")
+                    }
+                }
             }
         }
     }
 
-    private fun clickListener(item:Int, btn:Button){
-        val activity=requireActivity() as QuestionActivity
-        val viewModel= ViewModelProvider(activity)[QuestionViewModel::class.java]
+    private fun clickButtons() {
+        questionAdpater.setOnItemClickListener(object : QuestionViewHolder.OnItemClickListener {
+            override fun onItemClicked(answerId: Int, btn: Button) {
+                Log.d("questionfragment", "fragment answerid: ${answerId}");
+                questionViewModel.addToAnswerMap(answerId)
+                startAnimation(btn)
+                lifecycleScope.launch {
+                    delay(1000) // 1초 딜레이
+                    checkLastSurvey()
+                    getNextSurvey(btn)
+                }
+            }
+        })
+        /* with(binding){
+             btn1.setOnClickListener {
+                 clickListener(1, btn1)
+             }
+             btn2.setOnClickListener {
+                 clickListener(2, btn2)
+             }
+             btn3.setOnClickListener {
+                 clickListener(3, btn3)
+             }
+             btn4.setOnClickListener {
+                clickListener(4, btn4)
+             }
+         }*/
+    }
+
+    private fun checkLastSurvey() {
+        lifecycleScope.launch {
+            questionViewModel.isLastSurvey.observe(viewLifecycleOwner) { isLastSurvey ->
+                if (isLastSurvey) {
+                    val activity = requireActivity() as QuestionActivity
+                    activity?.endActivity()
+                }
+            }
+        }
+    }
+
+    private fun getNextSurvey(btn: Button) {
+        btn.background = resources.getDrawable(R.drawable.btn_unclicked)
+        questionViewModel.getSurvey()
+    }
+
+    private fun clickListener(item: Int, btn: Button) {
+        val activity = requireActivity() as QuestionActivity
+        val viewModel = ViewModelProvider(activity)[QuestionViewModel::class.java]
 
         viewModel.clearAnswerMap()
-        viewModel.addToAnswerMap(1, item)
+        //viewModel.addToAnswerMap(1, item)
         startAnimation(btn)
         activity.switchFragment(Question2Fragment())
     }
 
-    private fun startAnimation(btn:Button){
+    private fun startAnimation(btn: Button) {
         val clickedDrawable = resources.getDrawable(R.drawable.btn_clicked)
         val unclickedDrawable = resources.getDrawable(R.drawable.btn_unclicked)
 
-        val drawableList = listOf(unclickedDrawable, clickedDrawable, unclickedDrawable, clickedDrawable)
+        val drawableList =
+            listOf(unclickedDrawable, clickedDrawable, unclickedDrawable, clickedDrawable)
 
         val handler = Handler()
 
@@ -81,6 +145,6 @@ class Question1Fragment : Fragment(){
 
     override fun onDestroyView() {
         super.onDestroyView()
-        _binding=null
+        _binding = null
     }
 }

@@ -31,7 +31,7 @@ object RetrofitModule {
     ): OkHttpClient {
         return OkHttpClient.Builder()
             .addInterceptor(interceptor)
-            .connectTimeout(300, TimeUnit.SECONDS).readTimeout(200, TimeUnit.SECONDS)
+            .connectTimeout(500, TimeUnit.SECONDS).readTimeout(200, TimeUnit.SECONDS)
             .writeTimeout(200, TimeUnit.SECONDS).build()
     }
 
