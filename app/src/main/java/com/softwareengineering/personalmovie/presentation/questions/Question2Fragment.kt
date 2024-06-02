@@ -52,7 +52,7 @@ class Question2Fragment:Fragment() {
         val viewModel= ViewModelProvider(activity)[QuestionViewModel::class.java]
 
         //viewModel.haveAnswer(2)
-        viewModel.addToAnswerMap(2, item)
+        //viewModel.addToAnswerMap(2, item)
         startAnimation(btn)
         activity.switchFragment(Question3Fragment())
     }

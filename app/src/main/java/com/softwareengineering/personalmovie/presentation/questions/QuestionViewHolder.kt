@@ -10,12 +10,12 @@ class QuestionViewHolder(
     private val listener:OnItemClickListener
 ) :RecyclerView.ViewHolder(binding.root) {
         interface OnItemClickListener{
-            fun onItemClicked(item: Int, btn: Button)
+            fun onItemClicked(answerId: Int, btn: Button)
         }
-        fun bind(choice:ResponseSurveyDto.Choices, position:Int){
+        fun bind(choice:ResponseSurveyDto.Choices){
             binding.btn.text=choice.content
             binding.btn.setOnClickListener{
-                listener.onItemClicked(position, binding.btn)
+                listener.onItemClicked(choice.id, binding.btn)
             }
         }
 }

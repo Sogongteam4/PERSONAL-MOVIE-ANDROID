@@ -58,8 +58,8 @@ class Question4Fragment:Fragment() {
     }
 
     private fun clickListener(item:Int, btn: Button){
-        questionViewModel.haveAnswer(4)
-        questionViewModel.addToAnswerMap(4, item)
+        //questionViewModel.haveAnswer(4)
+        //questionViewModel.addToAnswerMap(4, item)
         startAnimation(btn)
     }
 

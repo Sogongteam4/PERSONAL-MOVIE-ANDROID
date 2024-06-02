@@ -51,8 +51,8 @@ class Question3Fragment:Fragment() {
         val activity=requireActivity() as QuestionActivity
         val viewModel= ViewModelProvider(activity)[QuestionViewModel::class.java]
 
-        viewModel.haveAnswer(3)
-        viewModel.addToAnswerMap(3, item)
+        //viewModel.haveAnswer(3)
+       // viewModel.addToAnswerMap(3, item)
         startAnimation(btn)
         activity.switchFragment(Question4Fragment())
     }

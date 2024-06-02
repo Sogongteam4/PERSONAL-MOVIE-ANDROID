@@ -1,39 +1,47 @@
 package com.softwareengineering.personalmovie.presentation.questions
 
 import android.os.Bundle
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.softwareengineering.personalmovie.data.repositoryImpl.AuthRepositoryImpl
+import com.softwareengineering.personalmovie.domain.repository.AuthRepository
+import com.softwareengineering.personalmovie.extension.SurveyState
+import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.launch
+import okhttp3.ResponseBody
+import org.json.JSONObject
+import retrofit2.HttpException
+import javax.inject.Inject
 
-class QuestionViewModel:ViewModel() {
+@HiltViewModel
+class QuestionViewModel @Inject constructor(
+    private val authRepository: AuthRepository
+) :ViewModel() {
     private val _token = MutableLiveData<String>()
     val token: LiveData<String> get() = _token
-
+    private var currentSurveyId=1
+    private val _surveyState= MutableStateFlow<SurveyState>(SurveyState.Loading)
+    val surveyState:StateFlow<SurveyState>
+        get()=_surveyState
+    private val _isLastSurvey=MutableLiveData<Boolean>(false)
+    val isLastSurvey:LiveData<Boolean> get() = _isLastSurvey
+    private val _answerMap = MutableLiveData<MutableMap<Int,Int>>()
     fun setToken(token: String) {
         _token.value = token
     }
 
-    private val _answerMap = MutableLiveData<MutableMap<Int,Int>>()
 
-    fun addToAnswerMap(questionNum:Int, item:Int){
+
+    fun addToAnswerMap(answerId:Int){
+        Log.d("questionviewmodel","answerid: ${answerId}")
         val currentMap=_answerMap.value?: mutableMapOf()
-        currentMap[questionNum] = item
+        currentMap[currentSurveyId-1] = answerId
         _answerMap.value=currentMap
-    }
-
-    fun haveAnswer(questionNum: Int){
-        val currentMap=_answerMap.value?: mutableMapOf()
-        if(currentMap.size==questionNum){
-            _answerMap.value=deleteBeforeAnswer(currentMap)
-        }
-    }
-
-    private fun deleteBeforeAnswer(currentMap:MutableMap<Int,Int>):MutableMap<Int,Int>{
-        val lastKey=currentMap.keys.lastOrNull()
-        if (lastKey != null) {
-            currentMap.remove(lastKey)
-        }
-        return currentMap
     }
 
     fun clearAnswerMap(){
@@ -45,19 +53,22 @@ class QuestionViewModel:ViewModel() {
         var answerList: MutableList<Int> = mutableListOf()
         for(i in _answerMap.value!!.values){
             answerList.add(i)
+            Log.d("questionviewmodel","answer: ${i}")
         }
 
         bundle.putIntegerArrayList("answerList",ArrayList(answerList))
         return bundle
     }
 
-    /*fun getSurvey(){
-        Log.d("questionviewmodel","token:${_token.value}")
+    fun getSurvey(){
+        if(currentSurveyId==5){
+            _isLastSurvey.value=true
+            return
+        }
         viewModelScope.launch {
-            authRepository.getSurvey(_token.value!!, questionNum).onSuccess { response ->
+            authRepository.getSurvey(_token.value!!, currentSurveyId++).onSuccess { response ->
                 if(response.status==200){
-                    _surveyState.value=SurveyState.Success(response.data)
-                    Log.d("questionviewmodel","${response.data.question}")
+                    _surveyState.value= SurveyState.Success(response.data)
                 }else{
                     Log.d("questionviewmodel","${response.message}")
                     _surveyState.value= SurveyState.Error
@@ -84,11 +95,6 @@ class QuestionViewModel:ViewModel() {
                 }
             }
         }
-    }*/
-
-
-
-
-
+    }
 
 }
