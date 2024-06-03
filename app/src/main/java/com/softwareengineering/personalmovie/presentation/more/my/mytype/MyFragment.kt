@@ -1,4 +1,4 @@
-package com.softwareengineering.personalmovie.presentation.type
+package com.softwareengineering.personalmovie.presentation.more.my.mytype
 
 import android.os.Bundle
 import android.util.Log
@@ -6,55 +6,103 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.CompositePageTransformer
 import androidx.viewpager2.widget.MarginPageTransformer
 import androidx.viewpager2.widget.ViewPager2
 import coil.load
 import com.softwareengineering.personalmovie.R
-import com.softwareengineering.personalmovie.data.Movie
 import com.softwareengineering.personalmovie.data.responseDto.ResponseMovieDto
 import com.softwareengineering.personalmovie.data.responseDto.ResponseTypeDto
 import com.softwareengineering.personalmovie.databinding.FragmentTypeBinding
-import com.softwareengineering.personalmovie.presentation.more.MoreActivity
+import com.softwareengineering.personalmovie.presentation.more.my.MyActivity
+import com.softwareengineering.personalmovie.presentation.more.my.MyViewModel
+import com.softwareengineering.personalmovie.presentation.type.TypeViewModel
+import com.softwareengineering.personalmovie.presentation.type.TypeViewPagerAdapter
+import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.serialization.json.Json
 import kotlin.math.abs
 
-class TypeFragment(
-    private val typeData:ResponseTypeDto.Data,
-    private val typeViewModel: TypeViewModel
-): Fragment() {
-    private var _binding: FragmentTypeBinding?=null
+@AndroidEntryPoint
+class MyFragment : Fragment(){
+    private var _binding: FragmentTypeBinding? = null
     private val binding: FragmentTypeBinding
-        get() = requireNotNull(_binding){"바인딩 객체 생성 안됨"}
+        get() = requireNotNull(_binding) { "바인딩 객체 생성 안됨" }
+    private lateinit var myViewModel: MyViewModel
+    private lateinit var type:ResponseTypeDto.Data
+    private val typeViewModel:TypeViewModel by viewModels()
+
+    companion object {
+        private const val ARG_TYPE_JSON = "arg_type_json"
+
+        fun newInstance(typeJson: String): MyFragment {
+            return MyFragment().apply {
+                arguments = Bundle().apply {
+                    putString(ARG_TYPE_JSON, typeJson)
+                }
+            }
+        }
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View {
-        _binding = FragmentTypeBinding.inflate(inflater,container,false)
+    ): View? {
+        val typeJson = arguments?.getString(ARG_TYPE_JSON)
+        type = typeJson?.let { Json.decodeFromString(ResponseTypeDto.Data.serializer(), it) }!!
+        _binding = FragmentTypeBinding.inflate(inflater, container, false)
         return binding.root
-    }
-
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        observeViewModel()
         setting()
-        setTexts()
-        clickButton()
+        observeViewModel()
     }
+
+    private fun setting() {
+        val activity = requireActivity() as MyActivity
+        myViewModel = ViewModelProvider(activity)[MyViewModel::class.java]
+        typeViewModel.setToken(myViewModel.getToken())
+        for(movieId in type.movieIds){
+            typeViewModel.getMovie(movieId)
+        }
+        setTexts()
+    }
+
+    private fun setTexts() {
+        with(binding) {
+            tvTitle.text=type.type
+            ivRacoon.load(type.imgUri)
+            btnMore.visibility=View.INVISIBLE
+            btnRestart.visibility=View.INVISIBLE
+            btnBack.setOnClickListener{
+                myViewModel.changeDetailState(false)
+                parentFragmentManager.beginTransaction()
+                    .setCustomAnimations(
+                        R.anim.slide_in_right,
+                        R.anim.slide_out_right
+                    )
+                    .remove(this@MyFragment).commit()
+            }
+            // maxwidth 설정
+            val dpValue = 200  // Example: 200dp
+            val density = tvTitle.resources.displayMetrics.density
+            val maxWidthPx = (dpValue * density).toInt()  // Convert dp to pixels
+            tvTitle.maxWidth = maxWidthPx  // Set the max width
+        }
+    }
+
     private fun observeViewModel() {
         typeViewModel.movieList.observe(viewLifecycleOwner) { movieList ->
             Log.d("RacoonFragment", "Movie list updated: $movieList")
             bindAdapter(movieList)
         }
     }
-
     private fun bindAdapter(movieList: List<ResponseMovieDto.Data>) {
         with(binding) {
             vpMovie.adapter = context?.let { TypeViewPagerAdapter(it, movieList) }
@@ -98,33 +146,8 @@ class TypeFragment(
         }
     }
 
-    private fun setting(){
-        for(movieId in typeData.movieIds){
-            typeViewModel.getMovie(movieId)
-        }
-    }
-
-    private fun setTexts(){
-        with(binding){
-            tvTitle.text=typeData.type
-            ivRacoon.load(typeData.imgUri)
-            btnBack.visibility=View.INVISIBLE
-        }
-    }
-
-    private fun clickButton(){
-        val activity=requireActivity() as TypeActivity
-        binding.btnRestart.setOnClickListener {
-            activity.restartQuestionActivity()
-        }
-
-        binding.btnMore.setOnClickListener{
-            activity.replaceActivity(MoreActivity())
-        }
-    }
-
     override fun onDestroyView() {
         super.onDestroyView()
-        _binding=null
+        _binding = null
     }
 }
