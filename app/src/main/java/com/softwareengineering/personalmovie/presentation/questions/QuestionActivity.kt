@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.util.Log
+import android.widget.ProgressBar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -16,6 +17,7 @@ class QuestionActivity : AppCompatActivity() {
     private lateinit var binding: ActivityQuestionBinding
     private lateinit var questionViewModel: QuestionViewModel
     private lateinit var token:String
+    private val totalSurveys=4
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,11 +41,10 @@ class QuestionActivity : AppCompatActivity() {
             .commit()
     }
 
-    fun switchFragment(fragment: Fragment) {
-        Handler().postDelayed({
-            setFragment(fragment)
-        }, 1000)
-        Log.d("change", "ChangeFragment!!")
+    fun updateProgressBar() {
+        val progressBar = findViewById<ProgressBar>(R.id.pb_bar)
+        val progress = ((questionViewModel.getSurveyId()-2).toFloat() / totalSurveys) * 100 // 현재 진행률 계산
+        progressBar.progress = progress.toInt()
     }
 
     fun endActivity() {

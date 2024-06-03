@@ -50,8 +50,9 @@
             android:exported="false"></activity>
         <activity android:name=".presentation.more.MoreActivity"
             android:exported="false">
-
         </activity>
+        <activity android:name=".presentation.more.my.MyActivity"
+            android:exported="false"></activity>
         <activity android:name=".presentation.more.result.SearchResultActivity"
             android:exported="false"></activity>
     </application>

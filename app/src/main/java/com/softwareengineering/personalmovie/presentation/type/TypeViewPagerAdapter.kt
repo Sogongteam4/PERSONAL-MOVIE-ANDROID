@@ -14,8 +14,8 @@ import com.softwareengineering.personalmovie.data.responseDto.ResponseMovieDto
 import com.softwareengineering.personalmovie.databinding.ItemDetailBinding
 
 class TypeViewPagerAdapter(private val context:Context, private val movieList:List<ResponseMovieDto.Data>):
-    RecyclerView.Adapter<TypeViewPagerAdapter.RacoonPagerViewHolder>() {
-    inner class RacoonPagerViewHolder(private val binding: ItemDetailBinding) :
+    RecyclerView.Adapter<TypeViewPagerAdapter.TypePagerViewHolder>() {
+    inner class TypePagerViewHolder(private val binding: ItemDetailBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
         fun bind(movie:ResponseMovieDto.Data) {
@@ -41,12 +41,12 @@ class TypeViewPagerAdapter(private val context:Context, private val movieList:Li
         }
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RacoonPagerViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TypePagerViewHolder {
         val binding =
             ItemDetailBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return RacoonPagerViewHolder(binding)
+        return TypePagerViewHolder(binding)
     }
-    override fun onBindViewHolder(holder: RacoonPagerViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: TypePagerViewHolder, position: Int) {
         val movie = movieList[position]
         holder.bind(movie)
     }

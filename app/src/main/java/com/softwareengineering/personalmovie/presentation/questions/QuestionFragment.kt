@@ -78,20 +78,6 @@ class QuestionFragment : Fragment() {
                 }
             }
         })
-        /* with(binding){
-             btn1.setOnClickListener {
-                 clickListener(1, btn1)
-             }
-             btn2.setOnClickListener {
-                 clickListener(2, btn2)
-             }
-             btn3.setOnClickListener {
-                 clickListener(3, btn3)
-             }
-             btn4.setOnClickListener {
-                clickListener(4, btn4)
-             }
-         }*/
     }
 
     private fun checkLastSurvey() {
@@ -108,6 +94,8 @@ class QuestionFragment : Fragment() {
     private fun getNextSurvey(btn: Button) {
         btn.background = resources.getDrawable(R.drawable.btn_unclicked)
         questionViewModel.getSurvey()
+        val questionActivity=activity as QuestionActivity
+        questionActivity.updateProgressBar()
     }
 
     private fun startAnimation(btn: Button) {
