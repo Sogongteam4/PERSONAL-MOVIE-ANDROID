@@ -46,5 +46,7 @@
     <string name="more_btn_adventure">어드벤처</string>
     <string name="more_btn_animation">애니메이션</string>
 
+    <string name="my_title">나의 유형</string>
+
     <string name="search_result_btn_back">&lt;</string>
 </resources>

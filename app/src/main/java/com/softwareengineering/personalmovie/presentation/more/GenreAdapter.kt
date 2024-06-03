@@ -39,22 +39,22 @@ class GenreAdapter(
             Movie.Genre("어드벤처"),
             Movie.Genre("애니메이션"),
             Movie.Genre("어린이"),
-            Movie.Genre("어드벤처"),
+            Movie.Genre("코미디"),
+            Movie.Genre("로맨스"),//
+            Movie.Genre("드라마"),
+            Movie.Genre("액션"),
+            Movie.Genre("범죄"),
+            Movie.Genre("스릴러"),
             Movie.Genre("호러"),//
+            Movie.Genre("공상과학"),
+            Movie.Genre("미스테리"),
+            Movie.Genre("뮤지컬"),
             Movie.Genre("전쟁"),
-            Movie.Genre("IMAX"),
-            Movie.Genre("어드벤처"),
-            Movie.Genre("어드벤처"),
-            Movie.Genre("어드벤처"),//
-            Movie.Genre("어드벤처"),
-            Movie.Genre("어드벤처"),
-            Movie.Genre("어드벤처"),
-            Movie.Genre("어드벤처"),
-            Movie.Genre("어드벤처"),//
-            Movie.Genre("어드벤처"),
-            Movie.Genre("어드벤처"),
-            Movie.Genre("어드벤처"),
-            Movie.Genre("어드벤처"),
+            Movie.Genre("IMAX"),//
+            Movie.Genre("시대극"),
+            Movie.Genre("누아르"),
+            Movie.Genre("다큐멘터리"),
+            Movie.Genre("판타지"),
         )
         genreList.addAll(list)
         notifyDataSetChanged()

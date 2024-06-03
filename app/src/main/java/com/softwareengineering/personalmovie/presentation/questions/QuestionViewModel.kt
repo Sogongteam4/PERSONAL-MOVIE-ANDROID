@@ -97,4 +97,5 @@ class QuestionViewModel @Inject constructor(
         }
     }
 
+    fun getSurveyId():Int=currentSurveyId
 }
