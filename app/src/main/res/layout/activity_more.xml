@@ -3,56 +3,35 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:scrollbars="vertical">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/white">
 
-        <ImageView
-            android:id="@+id/iv_search"
-            android:layout_width="300dp"
-            android:layout_height="35dp"
-            android:layout_marginTop="70dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/more_search_white" />
-
         <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/btn_search"
-            android:layout_width="25dp"
-            android:layout_height="25dp"
-            android:layout_marginStart="17dp"
-            android:background="@drawable/search_gray"
-            app:layout_constraintBottom_toBottomOf="@id/iv_search"
-            app:layout_constraintStart_toStartOf="@id/iv_search"
-            app:layout_constraintTop_toTopOf="@id/iv_search" />
-
-        <EditText
-            android:id="@+id/et_search"
-            android:layout_width="wrap_content"
-            android:layout_height="0dp"
-            android:layout_marginStart="20dp"
-            android:background="@android:color/transparent"
-            android:hint="Search"
-            android:maxWidth="470dp"
-            android:textSize="20sp"
-            app:layout_constraintBottom_toBottomOf="@id/iv_search"
-            app:layout_constraintStart_toEndOf="@id/btn_search"
-            app:layout_constraintTop_toTopOf="@id/iv_search" />
+            android:id="@+id/btn_my"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="30dp"
+            android:layout_marginEnd="30dp"
+            android:background="@drawable/my"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
 
         <TextView
             android:id="@+id/tv_genre"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="45dp"
-            android:layout_marginTop="60dp"
+            android:layout_marginTop="30dp"
             android:text="장르"
             android:textSize="30sp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/iv_search" />
+            app:layout_constraintTop_toBottomOf="@id/btn_my" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_genre"

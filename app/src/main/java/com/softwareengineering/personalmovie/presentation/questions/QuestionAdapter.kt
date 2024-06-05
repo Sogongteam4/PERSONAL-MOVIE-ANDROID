@@ -9,7 +9,7 @@ import com.softwareengineering.personalmovie.databinding.ItemSurveyBinding
 class QuestionAdapter() : RecyclerView.Adapter<QuestionViewHolder>() {
     private var btnList:MutableList<ResponseSurveyDto.Choices> = mutableListOf()
     private lateinit var listener:QuestionViewHolder.OnItemClickListener
-    fun setOnItemClicListener(listener:QuestionViewHolder.OnItemClickListener){
+    fun setOnItemClickListener(listener:QuestionViewHolder.OnItemClickListener){
         this.listener=listener
     }
 
@@ -20,7 +20,7 @@ class QuestionAdapter() : RecyclerView.Adapter<QuestionViewHolder>() {
 
     override fun onBindViewHolder(holder: QuestionViewHolder, position: Int) {
         val genreItem = btnList[position]
-        holder.bind(genreItem, position)
+        holder.bind(genreItem)
     }
 
     override fun getItemCount() = btnList.size

@@ -9,13 +9,13 @@ class QuestionViewHolder(
     private val binding:ItemSurveyBinding,
     private val listener:OnItemClickListener
 ) :RecyclerView.ViewHolder(binding.root) {
-        interface OnItemClickListener{
-            fun onItemClicked(item: Int, btn: Button)
+    interface OnItemClickListener{
+        fun onItemClicked(answerId: Int, btn: Button)
+    }
+    fun bind(choice:ResponseSurveyDto.Choices){
+        binding.btn.text=choice.content
+        binding.btn.setOnClickListener{
+            listener.onItemClicked(choice.id, binding.btn)
         }
-        fun bind(choice:ResponseSurveyDto.Choices, position:Int){
-            binding.btn.text=choice.content
-            binding.btn.setOnClickListener{
-                listener.onItemClicked(position, binding.btn)
-            }
-        }
+    }
 }
